@@ -2,7 +2,7 @@ object Versions {
     const val coroutines = "1.3.0-M1"
 
     const val appCompat = "1.1.0-beta01"
-    const val constraintLayout = "2.0.0-beta1"
+    const val constraintLayout = "2.0.0"
     const val legacySupportV4 = "1.0.0"
     const val lifecycle = "2.2.0-alpha01"
     const val material = "1.0.0"

@@ -23,9 +23,9 @@ object Libraries {
     const val navigation = "androidx.navigation:navigation-fragment-ktx:${Versions.navigation}"
     const val navigationUi = "androidx.navigation:navigation-ui-ktx:${Versions.navigation}"
 
-    const val koinAndroid = "org.koin:koin-android:${Versions.koin}"
-    const val koinViewModel = "org.koin:koin-android-viewmodel:${Versions.koin}"
-    const val koinScope = "org.koin:koin-android-scope:${Versions.koin}"
+    const val koinAndroid = "io.insert-koin:koin-android:${Versions.koin}"
+    const val koinViewModel = "io.insert-koin:koin-android-viewmodel:${Versions.koin}"
+    const val koinScope = "io.insert-koin:koin-android-scope:${Versions.koin}"
 
     const val rxJava = "io.reactivex.rxjava2:rxjava:${Versions.rxJava}"
     const val rxKotlin = "io.reactivex.rxjava2:rxkotlin:${Versions.rxKotlin}"

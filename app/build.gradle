@@ -116,3 +116,10 @@ dependencies {
 }
 
 apply plugin: 'com.google.gms.google-services'
+
+
+configurations.configureEach {
+    resolutionStrategy {
+        force 'androidx.fragment:fragment:1.1.0-beta01'
+    }
+}

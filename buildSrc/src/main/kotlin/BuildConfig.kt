@@ -1,6 +1,6 @@
 object BuildConfig {
     const val kotlin= "1.3.31"
-    const val agp = "3.5.0-beta03"
+    const val agp = "3.5.4"
     const val googleServices = "4.2.0"
     const val fabricTools = "1.29.0"
 

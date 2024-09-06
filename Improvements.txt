@@ -1,0 +1,11 @@
+Upgrade Gradle version 1 by 1 - implement the new features in each version
+Update all libraries 1 by 1 - implement the api changes in each version
+Add environment variables for the API KEYS etc.
+Remove firebase (should we?)
+
+Migrate UI to compose
+Migrate DI to Dagger
+Migrate LiveData to Flow
+Write Unit tests
+Write unit UI tests
+Write Instrumented tests
