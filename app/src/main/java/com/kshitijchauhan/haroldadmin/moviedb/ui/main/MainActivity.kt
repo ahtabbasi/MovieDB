@@ -25,8 +25,8 @@ import com.kshitijchauhan.haroldadmin.moviedb.R
 import com.kshitijchauhan.haroldadmin.moviedb.ui.common.BackPressListener
 import com.kshitijchauhan.haroldadmin.moviedb.core.extensions.getMainHandler
 import com.kshitijchauhan.haroldadmin.moviedb.core.extensions.postDelayed
+import com.kshitijchauhan.haroldadmin.moviedb.databinding.ActivityMainBinding
 import io.fabric.sdk.android.Fabric
-import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.ext.android.get
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     private var enableCrashlytics: Boolean = true
     private var enableAnalytics: Boolean = true
+    private lateinit var binding: ActivityMainBinding
 
     private val prefsListener = SharedPreferences.OnSharedPreferenceChangeListener { prefs, key ->
         when (key) {
@@ -55,7 +56,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        ActivityMainBinding.inflate(layoutInflater).apply {
+            binding = this
+            setContentView(root)
+        }
 
         toggleAnalytics(get<SharedPreferences>())
         toggleCrashlytics(get<SharedPreferences>())
@@ -66,7 +70,7 @@ class MainActivity : AppCompatActivity() {
 
         with(mainViewModel) {
             snackbar.observe(this@MainActivity, Observer { snackbarAction ->
-                val snackbar = Snackbar.make(homeRootView, snackbarAction.message, snackbarAction.length)
+                val snackbar = Snackbar.make(binding.homeRootView, snackbarAction.message, snackbarAction.length)
                 if (snackbarAction.actionText != null && snackbarAction.action != null) {
                     snackbar.setAction(snackbarAction.actionText, snackbarAction.action)
                 }
@@ -82,28 +86,28 @@ class MainActivity : AppCompatActivity() {
             })
         }
 
-        mainNavView.setupWithNavController(navController)
+        binding.mainNavView.setupWithNavController(navController)
 
         navController.addOnDestinationChangedListener { controller, destination, _ ->
             when (destination.id) {
                 R.id.aboutFragment -> {
-                    mainNavView.animateHideDown()
+                    binding.mainNavView.animateHideDown()
                     window.navigationBarColor = ContextCompat.getColor(this, R.color.colorSurfaceDark)
                 }
                 R.id.movieDetailsFragment, R.id.actorDetailsFragment -> {
-                    mainNavView.animateHideDown()
-                    mainToolbar.animatedHideUp()
+                    binding.mainNavView.animateHideDown()
+                    binding.mainToolbar.animatedHideUp()
                     window.navigationBarColor = ContextCompat.getColor(this, R.color.colorSurfaceDark)
                 }
                 else -> {
-                    mainNavView.animateShowUp()
-                    mainToolbar.animateShowDown()
+                    binding.mainNavView.animateShowUp()
+                    binding.mainToolbar.animateShowDown()
                     window.navigationBarColor = ContextCompat.getColor(this, R.color.colorSurface)
                 }
             }
         }
 
-        setSupportActionBar(mainToolbar)
+        setSupportActionBar(binding.mainToolbar)
         supportActionBar?.apply {
             title = getString(R.string.app_name)
         }

@@ -2,7 +2,7 @@ package com.kshitijchauhan.haroldadmin.moviedb.repository.data.remote.service.ac
 
 import android.os.Parcelable
 import com.squareup.moshi.Json
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 internal enum class MediaTypes(val mediaName: String) {
     MOVIE("movie"), TV("tv")

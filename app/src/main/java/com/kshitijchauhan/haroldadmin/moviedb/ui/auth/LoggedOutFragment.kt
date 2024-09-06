@@ -16,15 +16,16 @@ import androidx.transition.TransitionManager
 import androidx.transition.TransitionSet
 import com.google.android.material.snackbar.Snackbar
 import com.kshitijchauhan.haroldadmin.moviedb.R
+import com.kshitijchauhan.haroldadmin.moviedb.about.databinding.FragmentAboutBinding
 import com.kshitijchauhan.haroldadmin.moviedb.core.Resource
 import com.kshitijchauhan.haroldadmin.moviedb.core.extensions.gone
 import com.kshitijchauhan.haroldadmin.moviedb.core.extensions.safe
 import com.kshitijchauhan.haroldadmin.moviedb.core.extensions.visible
+import com.kshitijchauhan.haroldadmin.moviedb.databinding.FragmentLoggedOutBinding
 import com.kshitijchauhan.haroldadmin.moviedb.repository.data.remote.service.auth.CreateSessionRequest
 import com.kshitijchauhan.haroldadmin.moviedb.ui.BaseFragment
 import com.kshitijchauhan.haroldadmin.moviedb.ui.UIState
 import com.kshitijchauhan.haroldadmin.moviedb.ui.main.MainViewModel
-import kotlinx.android.synthetic.main.fragment_logged_out.*
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -32,6 +33,7 @@ class LoggedOutFragment : BaseFragment() {
 
     private val mainViewModel: MainViewModel by sharedViewModel()
     private val authenticationViewModel: AuthenticationViewModel by viewModel()
+    private lateinit var binding: FragmentLoggedOutBinding
 
     override val initialState: UIState = UIState.AccountScreenState.UnauthenticatedScreenState
 
@@ -50,9 +52,10 @@ class LoggedOutFragment : BaseFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_logged_out, container, false)
+        savedInstanceState: Bundle?,
+    ): View {
+        binding = FragmentLoggedOutBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -60,7 +63,7 @@ class LoggedOutFragment : BaseFragment() {
 
         updateToolbarTitle()
 
-        authWebView.apply {
+        binding.authWebView.apply {
             webViewClient = object : WebViewClient() {
                 override fun onPageFinished(view: WebView?, url: String?) {
                     super.onPageFinished(view, url)
@@ -74,7 +77,7 @@ class LoggedOutFragment : BaseFragment() {
             settings.javaScriptEnabled = true
         }
 
-        btLogin.setOnClickListener {
+        binding.btLogin.setOnClickListener {
             authenticationViewModel.getRequestToken()
 
             val transition = TransitionSet()
@@ -82,31 +85,33 @@ class LoggedOutFragment : BaseFragment() {
                 ordering = TransitionSet.ORDERING_SEQUENTIAL
                 addTransition(
                     Slide(Gravity.TOP)
-                        .addTarget(ivKey)
-                        .addTarget(tvNeedToLogin)
-                        .addTarget(btLogin)
+                        .addTarget(binding.ivKey)
+                        .addTarget(binding.tvNeedToLogin)
+                        .addTarget(binding.btLogin)
                         .setDuration(300)
                 )
                 addTransition(
                     Slide(Gravity.BOTTOM)
-                        .addTarget(authWebView)
+                        .addTarget(binding.authWebView)
                         .setDuration(300)
                 )
                 interpolator = FastOutSlowInInterpolator()
             }
 
-            TransitionManager.beginDelayedTransition(container, transition)
-            infoGroup.gone()
-            webGroup.visible()
+            TransitionManager.beginDelayedTransition(binding.container, transition)
+            binding.infoGroup.gone()
+            binding.webGroup.visible()
 
             authenticationViewModel.requestToken.observe(viewLifecycleOwner, Observer { tokenResource ->
                 when (tokenResource) {
                     is Resource.Success -> {
                         authorizeToken(tokenResource.data)
                     }
+
                     is Resource.Error -> {
                         mainViewModel.showSnackbar(R.string.error_login)
                     }
+
                     is Resource.Loading -> {
                         // TODO handle this
                     }
@@ -116,7 +121,7 @@ class LoggedOutFragment : BaseFragment() {
     }
 
     private fun authorizeToken(token: String) {
-        authWebView.loadUrl("https://www.themoviedb.org/authenticate/$token")
+        binding.authWebView.loadUrl("https://www.themoviedb.org/authenticate/$token")
     }
 
     private fun handleAuthorizationSuccessful(token: Resource<String>) {
@@ -129,21 +134,22 @@ class LoggedOutFragment : BaseFragment() {
                     ordering = TransitionSet.ORDERING_SEQUENTIAL
                     addTransition(
                         Fade()
-                            .addTarget(authWebView)
+                            .addTarget(binding.authWebView)
                             .setDuration(200)
                     )
                     addTransition(
                         Fade()
-                            .addTarget(pbLoading)
-                            .addTarget(tvPleaseWait)
+                            .addTarget(binding.pbLoading)
+                            .addTarget(binding.tvPleaseWait)
                             .setDuration(200)
                     )
                 }
 
-                TransitionManager.beginDelayedTransition(container, transition)
-                webGroup.gone()
-                loadingGroup.visible()
+                TransitionManager.beginDelayedTransition(binding.container, transition)
+                binding.webGroup.gone()
+                binding.loadingGroup.visible()
             }
+
             else -> {
                 // TODO Handle this
             }
@@ -158,9 +164,11 @@ class LoggedOutFragment : BaseFragment() {
                     }
                     Unit
                 }
+
                 is Resource.Error -> {
                     view?.let { Snackbar.make(it, accountDetailsResource.errorMessage, Snackbar.LENGTH_SHORT).show() }
                 }
+
                 is Resource.Loading -> {
                     // TODO Handle this
                     Unit

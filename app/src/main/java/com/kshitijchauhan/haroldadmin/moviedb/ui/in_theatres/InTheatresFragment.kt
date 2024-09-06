@@ -15,15 +15,17 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.RequestManager
 import com.google.android.material.snackbar.Snackbar
 import com.kshitijchauhan.haroldadmin.moviedb.R
+import com.kshitijchauhan.haroldadmin.moviedb.about.R2.attr.layoutManager
 import com.kshitijchauhan.haroldadmin.moviedb.core.Resource
 import com.kshitijchauhan.haroldadmin.moviedb.core.extensions.getNumberOfColumns
+import com.kshitijchauhan.haroldadmin.moviedb.databinding.FragmentInTheatresBinding
+import com.kshitijchauhan.haroldadmin.moviedb.databinding.FragmentLibraryBinding
 import com.kshitijchauhan.haroldadmin.moviedb.ui.BaseFragment
 import com.kshitijchauhan.haroldadmin.moviedb.ui.UIState
 import com.kshitijchauhan.haroldadmin.moviedb.ui.common.EpoxyCallbacks
 import com.kshitijchauhan.haroldadmin.moviedb.ui.main.MainViewModel
 import com.kshitijchauhan.haroldadmin.moviedb.utils.EqualSpaceGridItemDecoration
 import com.kshitijchauhan.haroldadmin.mvrxlite.base.MVRxLiteView
-import kotlinx.android.synthetic.main.fragment_in_theatres.*
 import org.koin.android.ext.android.get
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.sharedViewModel
@@ -36,18 +38,20 @@ import kotlin.math.roundToInt
 class InTheatresFragment : BaseFragment(), MVRxLiteView<UIState.InTheatresScreenState> {
 
     private val mainViewModel: MainViewModel by sharedViewModel()
+    private lateinit var binding: FragmentInTheatresBinding
+
     private val countryCode: String by lazy {
         PreferenceManager.getDefaultSharedPreferences(activity)
             .getString(
                 com.kshitijchauhan.haroldadmin.moviedb.core.Constants.KEY_COUNTRY_CODE,
                 Locale.getDefault().country
-            )
+            ) ?: Locale.getDefault().country
     }
     private val countryName: String by lazy {
         get<SharedPreferences>().getString(
             com.kshitijchauhan.haroldadmin.moviedb.core.Constants.KEY_COUNTRY_NAME,
             Locale.getDefault().displayCountry
-        )
+        ) ?: Locale.getDefault().displayCountry
     }
 
     override val initialState: UIState by lazy {
@@ -87,8 +91,9 @@ class InTheatresFragment : BaseFragment(), MVRxLiteView<UIState.InTheatresScreen
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_in_theatres, container, false)
+    ): View {
+        binding = FragmentInTheatresBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -114,7 +119,7 @@ class InTheatresFragment : BaseFragment(), MVRxLiteView<UIState.InTheatresScreen
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         updateToolbarTitle()
-        rvMovies.apply {
+        binding.rvMovies.apply {
             val columns = resources.getDimension(R.dimen.movie_grid_poster_width).getNumberOfColumns(context!!)
             val space = resources.getDimension(R.dimen.movie_grid_item_space)
             layoutManager = GridLayoutManager(context, columns)

@@ -8,7 +8,7 @@ import kotlin.reflect.KProperty
 class SharedPreferencesDelegate<T>(
     private val prefs: SharedPreferences,
     private val key: String,
-    private val defaultValue: T
+    private val defaultValue: T,
 ) {
 
     operator fun getValue(thisRef: Any?, property: KProperty<*>): T {
@@ -28,7 +28,7 @@ class SharedPreferencesDelegate<T>(
                 is Int -> getInt(key, defaultValue)
                 is Long -> getLong(key, defaultValue)
                 is Float -> getFloat(key, defaultValue)
-                is String -> getString(key, defaultValue)
+                is String -> getString(key, defaultValue) ?: defaultValue
                 else -> throw IllegalArgumentException()
             }
             return result as T

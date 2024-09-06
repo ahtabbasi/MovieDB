@@ -3,7 +3,7 @@ package com.kshitijchauhan.haroldadmin.moviedb.repository.data.remote.service.ac
 import android.os.Parcelable
 import com.kshitijchauhan.haroldadmin.moviedb.repository.data.remote.service.common.GeneralMovieResponse
 import com.squareup.moshi.Json
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Gravatar(

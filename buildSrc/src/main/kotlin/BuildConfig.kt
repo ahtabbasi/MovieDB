@@ -4,7 +4,7 @@ object BuildConfig {
     const val googleServices = "4.3.15"
     const val fabricTools = "1.29.0"
 
-    const val compileSdk = 28
+    const val compileSdk = 33
     const val minSdk = 21
     const val targetSdk = 28
 

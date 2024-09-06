@@ -17,6 +17,8 @@ import com.jakewharton.rxrelay2.PublishRelay
 import com.kshitijchauhan.haroldadmin.moviedb.R
 import com.kshitijchauhan.haroldadmin.moviedb.core.Resource
 import com.kshitijchauhan.haroldadmin.moviedb.core.extensions.getNumberOfColumns
+import com.kshitijchauhan.haroldadmin.moviedb.databinding.FragmentHomeBinding
+import com.kshitijchauhan.haroldadmin.moviedb.databinding.FragmentMovieDetailsBinding
 import com.kshitijchauhan.haroldadmin.moviedb.repository.collections.CollectionType
 import com.kshitijchauhan.haroldadmin.moviedb.ui.BaseFragment
 import com.kshitijchauhan.haroldadmin.moviedb.ui.UIState
@@ -24,8 +26,6 @@ import com.kshitijchauhan.haroldadmin.moviedb.ui.common.BackPressListener
 import com.kshitijchauhan.haroldadmin.moviedb.ui.common.EpoxyCallbacks
 import com.kshitijchauhan.haroldadmin.moviedb.utils.EqualSpaceGridItemDecoration
 import com.kshitijchauhan.haroldadmin.mvrxlite.base.MVRxLiteView
-import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.view_searchbox.view.*
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -40,6 +40,7 @@ class HomeFragment :
     MVRxLiteView<UIState.HomeScreenState> {
 
     private val mainViewModel: MainViewModel by sharedViewModel()
+    private lateinit var binding: FragmentHomeBinding
 
     private val callbacks = object : EpoxyCallbacks {
         override fun onMovieItemClicked(id: Int, transitionName: String, sharedView: View?) {
@@ -102,7 +103,7 @@ class HomeFragment :
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
 
         val transition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
@@ -115,13 +116,14 @@ class HomeFragment :
         }
 
         postponeEnterTransition()
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         updateToolbarTitle()
-        rvHome.apply {
+        binding.rvHome.apply {
             val columns = resources.getDimension(R.dimen.movie_grid_poster_width).getNumberOfColumns(context!!)
             val space = resources.getDimension(R.dimen.movie_grid_item_space)
             layoutManager = GridLayoutManager(context, columns)
@@ -137,7 +139,7 @@ class HomeFragment :
     }
 
     private fun setupSearchBox() {
-        searchBox.etSearchBox.textChanges()
+        binding.searchBox.etSearchBox.textChanges()
             .debounce(300, TimeUnit.MILLISECONDS)
             .map { text -> text.toString() }
             .takeUntil(onDestroyView)
@@ -151,7 +153,7 @@ class HomeFragment :
         return with(homeViewModel) {
             state.value!!.searchResultsResource?.let {
                 clearSearchResults()
-                searchBox.etSearchBox.setText("")
+                binding.searchBox.etSearchBox.setText("")
                 this@HomeFragment.view?.requestFocus()
                 false
             } ?: true

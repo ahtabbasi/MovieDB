@@ -2,7 +2,7 @@ package com.kshitijchauhan.haroldadmin.moviedb.repository.data.remote.service.co
 
 import android.os.Parcelable
 import com.squareup.moshi.Json
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 import java.util.*
 
 @Parcelize

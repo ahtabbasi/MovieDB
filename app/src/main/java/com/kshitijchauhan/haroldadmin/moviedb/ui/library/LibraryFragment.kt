@@ -15,6 +15,8 @@ import com.kshitijchauhan.haroldadmin.moviedb.R
 import com.kshitijchauhan.haroldadmin.moviedb.core.Resource
 import com.kshitijchauhan.haroldadmin.moviedb.core.extensions.getNumberOfColumns
 import com.kshitijchauhan.haroldadmin.moviedb.core.extensions.log
+import com.kshitijchauhan.haroldadmin.moviedb.databinding.FragmentHomeBinding
+import com.kshitijchauhan.haroldadmin.moviedb.databinding.FragmentLibraryBinding
 import com.kshitijchauhan.haroldadmin.moviedb.repository.collections.CollectionType
 import com.kshitijchauhan.haroldadmin.moviedb.ui.BaseFragment
 import com.kshitijchauhan.haroldadmin.moviedb.ui.UIState
@@ -22,7 +24,6 @@ import com.kshitijchauhan.haroldadmin.moviedb.ui.common.EpoxyCallbacks
 import com.kshitijchauhan.haroldadmin.moviedb.ui.main.MainViewModel
 import com.kshitijchauhan.haroldadmin.moviedb.utils.EqualSpaceGridItemDecoration
 import com.kshitijchauhan.haroldadmin.mvrxlite.base.MVRxLiteView
-import kotlinx.android.synthetic.main.fragment_library.*
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -33,6 +34,7 @@ import kotlin.math.roundToInt
 class LibraryFragment : BaseFragment(), MVRxLiteView<UIState.LibraryScreenState> {
 
     private val mainViewModel: MainViewModel by sharedViewModel()
+    private lateinit var binding: FragmentLibraryBinding
 
     private val callbacks = object : EpoxyCallbacks {
         override fun onMovieItemClicked(id: Int, transitionName: String, sharedView: View?) {
@@ -74,16 +76,17 @@ class LibraryFragment : BaseFragment(), MVRxLiteView<UIState.LibraryScreenState>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         postponeEnterTransition()
-        return inflater.inflate(R.layout.fragment_library, container, false)
+        binding = FragmentLibraryBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         updateToolbarTitle()
-        rvLibrary.apply {
+        binding.rvLibrary.apply {
             val columns = resources.getDimension(R.dimen.movie_grid_poster_width).getNumberOfColumns(context!!)
             val space = resources.getDimension(R.dimen.movie_grid_item_space)
             layoutManager = GridLayoutManager(context, columns)

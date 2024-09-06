@@ -65,5 +65,7 @@ object Libraries {
     const val roomCoroutines = "androidx.room:room-ktx:${Versions.room}"
     const val roomCompiler = "androidx.room:room-compiler:${Versions.room}"
     const val roomRx = "androidx.room:room-rxjava2:${Versions.room}"
+
+    const val youtubePlayer = "com.pierfrancescosoffritti.androidyoutubeplayer:core:${Versions.youtubePlayer}"
 }
 

@@ -4,6 +4,7 @@ Add environment variables for the API KEYS etc.
 Upgrade targetSDK, minSDK and compileSDK
 Remove firebase (should we?)
 
+Replace databinding with viewBinding
 Migrate UI to compose
 Migrate DI to Dagger
 Migrate LiveData to Flow

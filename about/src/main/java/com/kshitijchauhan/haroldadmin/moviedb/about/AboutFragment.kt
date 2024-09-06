@@ -8,7 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import kotlinx.android.synthetic.main.fragment_about.view.*
+import com.kshitijchauhan.haroldadmin.moviedb.about.databinding.FragmentAboutBinding
 import org.koin.android.ext.android.inject
 import org.koin.core.qualifier.named
 
@@ -16,10 +16,12 @@ class AboutFragment : Fragment() {
 
     private val epoxyHandler by inject<Handler>(named("epoxy-handler"))
     private val state = AboutState()
+    private lateinit var binding: FragmentAboutBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_about, container, false)
-        view.rvAbout.apply {
+        binding = FragmentAboutBinding.inflate(inflater, container, false)
+        val view = binding.root
+        binding.rvAbout.apply {
             setController(epoxyController)
             epoxyController.setData(state)
         }

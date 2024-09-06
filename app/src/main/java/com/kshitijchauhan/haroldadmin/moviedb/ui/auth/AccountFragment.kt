@@ -14,11 +14,12 @@ import com.bumptech.glide.request.RequestOptions
 import com.kshitijchauhan.haroldadmin.moviedb.R
 import com.kshitijchauhan.haroldadmin.moviedb.core.Resource
 import com.kshitijchauhan.haroldadmin.moviedb.core.extensions.safe
+import com.kshitijchauhan.haroldadmin.moviedb.databinding.FragmentAccountBinding
+import com.kshitijchauhan.haroldadmin.moviedb.databinding.FragmentInTheatresBinding
 import com.kshitijchauhan.haroldadmin.moviedb.repository.data.remote.service.account.AccountDetailsResponse
 import com.kshitijchauhan.haroldadmin.moviedb.ui.BaseFragment
 import com.kshitijchauhan.haroldadmin.moviedb.ui.UIState
 import com.kshitijchauhan.haroldadmin.moviedb.ui.main.MainViewModel
-import kotlinx.android.synthetic.main.fragment_account.*
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -29,6 +30,8 @@ class AccountFragment : BaseFragment() {
 
     private val mainViewModel: MainViewModel by sharedViewModel()
     private val authenticationViewModel: AuthenticationViewModel by viewModel()
+    private lateinit var binding: FragmentAccountBinding
+
     private val glideRequestManager: RequestManager by inject(named("fragment-glide-request-manager")) {
         parametersOf(this)
     }
@@ -44,7 +47,8 @@ class AccountFragment : BaseFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_account, container, false)
+        binding = FragmentAccountBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -65,7 +69,7 @@ class AccountFragment : BaseFragment() {
 
         updateToolbarTitle()
 
-        btLogout.setOnClickListener {
+        binding.btLogout.setOnClickListener {
             handleLogout()
             findNavController().popBackStack()
         }
@@ -96,9 +100,9 @@ class AccountFragment : BaseFragment() {
                                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                                 .circleCrop()
                         )
-                        .into(ivAvatar)
-                    tvName.text = name
-                    tvUsername.text = username
+                        .into(binding.ivAvatar)
+                    binding.tvName.text = name
+                    binding.tvUsername.text = username
                 }
             }
             is Resource.Error -> {

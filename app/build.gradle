@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: "androidx.navigation.safeargs.kotlin"
 apply plugin: 'io.fabric'
@@ -52,10 +51,6 @@ android {
         }
     }
 
-    androidExtensions {
-        experimental = true
-    }
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -63,6 +58,10 @@ android {
 
     dataBinding {
         enabled = true
+    }
+
+    buildFeatures {
+        viewBinding = true
     }
 }
 
@@ -113,6 +112,8 @@ dependencies {
     implementation Libraries.firebaseCore
     implementation Libraries.crashlytics
     implementation Libraries.okhttp
+
+    implementation Libraries.youtubePlayer
 }
 
 apply plugin: 'com.google.gms.google-services'
@@ -120,6 +121,6 @@ apply plugin: 'com.google.gms.google-services'
 
 configurations.configureEach {
     resolutionStrategy {
-        force 'androidx.fragment:fragment:1.1.0-beta01'
+        force 'androidx.fragment:fragment:1.2.0'
     }
 }

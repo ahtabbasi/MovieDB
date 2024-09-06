@@ -40,4 +40,6 @@ object Versions {
     const val cnrAdapter = "2.0.2"
 
     const val room = "2.1.0-rc01"
+
+    const val youtubePlayer = "12.1.0"
 }

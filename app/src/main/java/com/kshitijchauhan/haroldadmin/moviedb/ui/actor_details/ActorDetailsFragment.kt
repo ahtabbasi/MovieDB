@@ -21,13 +21,12 @@ import com.google.android.material.snackbar.Snackbar
 import com.kshitijchauhan.haroldadmin.moviedb.R
 import com.kshitijchauhan.haroldadmin.moviedb.core.Resource
 import com.kshitijchauhan.haroldadmin.moviedb.core.extensions.safe
+import com.kshitijchauhan.haroldadmin.moviedb.databinding.ActorDetailsFragmentBinding
 import com.kshitijchauhan.haroldadmin.moviedb.repository.actors.Actor
 import com.kshitijchauhan.haroldadmin.moviedb.ui.BaseFragment
 import com.kshitijchauhan.haroldadmin.moviedb.ui.UIState
 import com.kshitijchauhan.haroldadmin.moviedb.ui.main.MainViewModel
 import com.kshitijchauhan.haroldadmin.mvrxlite.base.MVRxLiteView
-import kotlinx.android.synthetic.main.actor_details_fragment.*
-import kotlinx.android.synthetic.main.actor_details_fragment.view.*
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -38,6 +37,7 @@ class ActorDetailsFragment : BaseFragment(), MVRxLiteView<UIState.ActorDetailsSc
 
     private val mainViewModel: MainViewModel by sharedViewModel()
     private val safeArgs: ActorDetailsFragmentArgs by navArgs()
+    private lateinit var binding: ActorDetailsFragmentBinding
 
     private val glideRequestManager: RequestManager by inject(named("fragment-glide-request-manager")) {
         parametersOf(this)
@@ -62,8 +62,8 @@ class ActorDetailsFragment : BaseFragment(), MVRxLiteView<UIState.ActorDetailsSc
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+        savedInstanceState: Bundle?,
+    ): View {
 
         val transition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
         val animatorDuration = requireContext().resources.getInteger(R.integer.sharedElementTransitionDuration).toLong()
@@ -77,16 +77,16 @@ class ActorDetailsFragment : BaseFragment(), MVRxLiteView<UIState.ActorDetailsSc
         }
 
         postponeEnterTransition()
-        return inflater
-            .inflate(R.layout.actor_details_fragment, container, false)
-            .apply {
-                ViewCompat.setTransitionName(this.ivActorPhoto, safeArgs.transitionNameArg)
-            }
+
+        binding = ActorDetailsFragmentBinding.inflate(inflater, container, false).apply {
+            ViewCompat.setTransitionName(this.ivActorPhoto, safeArgs.transitionNameArg)
+        }
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        rvActorDetails.apply {
+        binding.rvActorDetails.apply {
             layoutManager = LinearLayoutManager(context)
             setController(actorDetailsEpoxyController)
         }
@@ -111,9 +111,11 @@ class ActorDetailsFragment : BaseFragment(), MVRxLiteView<UIState.ActorDetailsSc
             is Resource.Success -> {
                 handleResourceSuccess(resource.data)
             }
+
             is Resource.Error -> {
                 handleResourceError()
             }
+
             else -> Unit
         }.safe
     }
@@ -135,7 +137,7 @@ class ActorDetailsFragment : BaseFragment(), MVRxLiteView<UIState.ActorDetailsSc
                     e: GlideException?,
                     model: Any?,
                     target: Target<Drawable>?,
-                    isFirstResource: Boolean
+                    isFirstResource: Boolean,
                 ): Boolean {
                     startPostponedEnterTransition()
                     return false
@@ -146,15 +148,14 @@ class ActorDetailsFragment : BaseFragment(), MVRxLiteView<UIState.ActorDetailsSc
                     model: Any?,
                     target: Target<Drawable>?,
                     dataSource: DataSource?,
-                    isFirstResource: Boolean
+                    isFirstResource: Boolean,
                 ): Boolean {
                     startPostponedEnterTransition()
                     return false
                 }
-
             })
-            .into(ivActorPhoto)
-        tvActorName.text = actor.name
+            .into(binding.ivActorPhoto)
+        binding.tvActorName.text = actor.name
     }
 
     private fun handleResourceError() {
@@ -166,7 +167,7 @@ class ActorDetailsFragment : BaseFragment(), MVRxLiteView<UIState.ActorDetailsSc
                 RequestOptions()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
             }
-            .into(ivActorPhoto)
-        tvActorName.text = getString(R.string.actor_name_error)
+            .into(binding.ivActorPhoto)
+        binding.tvActorName.text = getString(R.string.actor_name_error)
     }
 }

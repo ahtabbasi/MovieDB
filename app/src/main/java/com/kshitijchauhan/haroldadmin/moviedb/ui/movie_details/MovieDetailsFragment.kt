@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.ViewCompat
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
@@ -26,23 +27,22 @@ import com.kshitijchauhan.haroldadmin.moviedb.core.Resource
 import com.kshitijchauhan.haroldadmin.moviedb.core.extensions.format
 import com.kshitijchauhan.haroldadmin.moviedb.core.extensions.getNumberOfColumns
 import com.kshitijchauhan.haroldadmin.moviedb.core.extensions.safe
+import com.kshitijchauhan.haroldadmin.moviedb.databinding.FragmentMovieDetailsBinding
 import com.kshitijchauhan.haroldadmin.moviedb.ui.BaseFragment
 import com.kshitijchauhan.haroldadmin.moviedb.ui.UIState
 import com.kshitijchauhan.haroldadmin.moviedb.ui.main.MainViewModel
 import com.kshitijchauhan.haroldadmin.mvrxlite.base.MVRxLiteView
-import kotlinx.android.synthetic.main.fragment_movie_details.*
-import kotlinx.android.synthetic.main.fragment_movie_details.view.*
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import org.koin.core.qualifier.named
 
-
 class MovieDetailsFragment : BaseFragment(), MVRxLiteView<UIState.DetailsScreenState> {
 
     private val mainViewModel: MainViewModel by sharedViewModel()
     private val safeArgs: MovieDetailsFragmentArgs by navArgs()
+    private lateinit var binding: FragmentMovieDetailsBinding
 
     private val callbacks = object : DetailsEpoxyController.MovieDetailsCallbacks {
         override fun toggleMovieFavouriteStatus() {
@@ -119,7 +119,7 @@ class MovieDetailsFragment : BaseFragment(), MVRxLiteView<UIState.DetailsScreenS
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
 
         val transition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
@@ -134,17 +134,17 @@ class MovieDetailsFragment : BaseFragment(), MVRxLiteView<UIState.DetailsScreenS
         }
 
         postponeEnterTransition()
-        return inflater
-            .inflate(R.layout.fragment_movie_details, container, false)
-            .apply {
-                ViewCompat.setTransitionName(this.ivPoster, safeArgs.transitionNameArg)
-            }
+        binding = FragmentMovieDetailsBinding.inflate(inflater, container, false).apply {
+            ViewCompat.setTransitionName(this.ivPoster, safeArgs.transitionNameArg)
+        }
+
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         updateToolbarTitle()
-        rvMovieDetails.apply {
+        binding.rvMovieDetails.apply {
             val columns = resources.getDimension(R.dimen.cast_member_picture_size).getNumberOfColumns(view.context)
             layoutManager = GridLayoutManager(context, columns)
             setController(detailsEpoxyController)
@@ -187,7 +187,7 @@ class MovieDetailsFragment : BaseFragment(), MVRxLiteView<UIState.DetailsScreenS
                             e: GlideException?,
                             model: Any?,
                             target: Target<Drawable>?,
-                            isFirstResource: Boolean
+                            isFirstResource: Boolean,
                         ): Boolean {
                             startPostponedEnterTransition()
                             return false
@@ -198,13 +198,13 @@ class MovieDetailsFragment : BaseFragment(), MVRxLiteView<UIState.DetailsScreenS
                             model: Any?,
                             target: Target<Drawable>?,
                             dataSource: DataSource?,
-                            isFirstResource: Boolean
+                            isFirstResource: Boolean,
                         ): Boolean {
                             startPostponedEnterTransition()
                             return false
                         }
                     })
-                    .into(ivPoster)
+                    .into(binding.ivPoster)
 
                 glideRequestManager
                     .asBitmap()
@@ -214,13 +214,14 @@ class MovieDetailsFragment : BaseFragment(), MVRxLiteView<UIState.DetailsScreenS
                         RequestOptions()
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                     }
-                    .into(ivBackdrop)
+                    .into(binding.ivBackdrop)
 
-                tvTitle.text = movie.title
-                chipMovieYear.text = movie.releaseDate.format("yyyy")
-                chipMovieGenre.text = movie.genres?.first() ?: "..."
-                chipMovieRating.text = movie.voteAverage.format("%.2f")
+                binding.tvTitle.text = movie.title
+                binding.chipMovieYear.text = movie.releaseDate.format("yyyy")
+                binding.chipMovieGenre.text = movie.genres?.first() ?: "..."
+                binding.chipMovieRating.text = movie.voteAverage.format("%.2f")
             }
+
             else -> Unit
         }.safe
     }
