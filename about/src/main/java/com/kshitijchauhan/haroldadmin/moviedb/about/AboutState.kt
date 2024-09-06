@@ -9,7 +9,7 @@ private const val appUrl = "https://play.google.com/store/apps/details?id=com.ks
 private const val tmdb = "http://themoviedb.org"
 
 data class AboutState(
-    val version: String = BuildConfig.VERSION_NAME,
+    val version: String = "0.8 TODO",// TODO get from BuildConfig.VERSION_NAME
     val applicationUrl: String = appUrl,
     val authorName: String = authName,
     val authorUrl: String = githubProfile,
