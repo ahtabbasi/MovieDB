@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "461145639224",
+    "project_id": "mytmdb-4bffe",
+    "storage_bucket": "mytmdb-4bffe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:461145639224:android:7ea6e5084c89a8ec2bd9cd",
+        "android_client_info": {
+          "package_name": "com.kshitijchauhan.haroldadmin.moviedb"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBp4OgEzkrKQKGygBhWXgWb7Np2k-L2vxU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
