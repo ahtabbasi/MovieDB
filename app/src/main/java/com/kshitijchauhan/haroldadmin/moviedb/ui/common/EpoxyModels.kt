@@ -5,7 +5,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.ViewCompat
 import com.airbnb.epoxy.EpoxyAttribute
-import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.bumptech.glide.RequestManager
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -14,8 +13,9 @@ import com.bumptech.glide.request.RequestOptions
 import com.kshitijchauhan.haroldadmin.moviedb.R
 import org.koin.core.KoinComponent
 
-@EpoxyModelClass(layout = R.layout.item_section_header)
 abstract class HeaderModel : EpoxyModelWithHolder<HeaderModel.HeaderViewHolder>() {
+
+    override fun getDefaultLayout(): Int = R.layout.item_section_header
 
     @EpoxyAttribute
     lateinit var title: String
@@ -33,8 +33,9 @@ abstract class HeaderModel : EpoxyModelWithHolder<HeaderModel.HeaderViewHolder>(
     }
 }
 
-@EpoxyModelClass(layout = R.layout.item_moviegrid)
 abstract class MovieModel : EpoxyModelWithHolder<MovieModel.MovieViewHolder>() {
+
+    override fun getDefaultLayout(): Int = R.layout.item_moviegrid
 
     @EpoxyAttribute
     lateinit var posterUrl: String
@@ -72,8 +73,9 @@ abstract class MovieModel : EpoxyModelWithHolder<MovieModel.MovieViewHolder>() {
     }
 }
 
-@EpoxyModelClass(layout = R.layout.view_info_text)
 abstract class InfoTextModel : EpoxyModelWithHolder<InfoTextModel.InfoTextViewHolder>() {
+
+    override fun getDefaultLayout(): Int = R.layout.view_info_text
 
     @EpoxyAttribute
     lateinit var text: String
@@ -88,16 +90,18 @@ abstract class InfoTextModel : EpoxyModelWithHolder<InfoTextModel.InfoTextViewHo
     }
 }
 
-@EpoxyModelClass(layout = R.layout.view_need_to_login)
 abstract class NeedToLoginModel : EpoxyModelWithHolder<NeedToLoginModel.NeedToLoginViewHolder>() {
+
+    override fun getDefaultLayout(): Int = R.layout.view_need_to_login
 
     inner class NeedToLoginViewHolder : KotlinEpoxyHolder() {
         val textview by bind<TextView>(R.id.tvNeedToLogin)
     }
 }
 
-@EpoxyModelClass(layout = R.layout.item_credit_actor)
 abstract class ActorModel : EpoxyModelWithHolder<ActorModel.ActorHolder>() {
+
+    override fun getDefaultLayout(): Int = R.layout.item_credit_actor
 
     @EpoxyAttribute
     var actorId: Int? = null
@@ -149,8 +153,9 @@ abstract class ActorModel : EpoxyModelWithHolder<ActorModel.ActorHolder>() {
     }
 }
 
-@EpoxyModelClass(layout = R.layout.item_movie_search_result)
 abstract class MovieSearchResultModel : EpoxyModelWithHolder<MovieSearchResultModel.MovieSearchResultHolder>() {
+
+    override fun getDefaultLayout(): Int = R.layout.item_movie_search_result
 
     @EpoxyAttribute
     lateinit var posterUrl: String
@@ -200,8 +205,9 @@ abstract class MovieSearchResultModel : EpoxyModelWithHolder<MovieSearchResultMo
     }
 }
 
-@EpoxyModelClass(layout = R.layout.view_loading)
 abstract class LoadingModel: EpoxyModelWithHolder<LoadingModel.LoadingHolder>() {
+
+    override fun getDefaultLayout(): Int = R.layout.view_loading
 
     @EpoxyAttribute
     lateinit var description: String

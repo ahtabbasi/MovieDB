@@ -9,7 +9,7 @@ object Versions {
     const val ktxCore = "1.0.1"
     const val preference = "1.1.0-beta01"
     const val legacyPreferenceV14 = "1.0.0"
-    const val navigation = "2.3.5"
+    const val navigation = "2.5.0"
 
     const val koin = "2.0.1"
 

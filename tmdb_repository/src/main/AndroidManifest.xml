@@ -1,2 +1,1 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.haroldadmin.tmdb_repository" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" />

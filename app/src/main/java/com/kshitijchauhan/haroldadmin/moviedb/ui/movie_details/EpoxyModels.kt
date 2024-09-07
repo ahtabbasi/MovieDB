@@ -3,16 +3,15 @@ package com.kshitijchauhan.haroldadmin.moviedb.ui.movie_details
 import android.view.View
 import android.widget.TextView
 import com.airbnb.epoxy.EpoxyAttribute
-import com.airbnb.epoxy.EpoxyHolder
-import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.kshitijchauhan.haroldadmin.moviedb.R
 import com.kshitijchauhan.haroldadmin.moviedb.repository.movies.AccountState
 import com.kshitijchauhan.haroldadmin.moviedb.ui.common.CustomMaterialButton
 import com.kshitijchauhan.haroldadmin.moviedb.ui.common.KotlinEpoxyHolder
 
-@EpoxyModelClass(layout = R.layout.view_main_text)
 abstract class MainTextModel : EpoxyModelWithHolder<MainTextModel.MainTextViewHolder>() {
+
+    override fun getDefaultLayout(): Int = R.layout.view_main_text
 
     @EpoxyAttribute
     lateinit var text: String
@@ -27,8 +26,9 @@ abstract class MainTextModel : EpoxyModelWithHolder<MainTextModel.MainTextViewHo
     }
 }
 
-@EpoxyModelClass(layout = R.layout.view_movie_info_bar)
 abstract class InfoBarModel : EpoxyModelWithHolder<InfoBarModel.InfoBarHolder>() {
+
+    override fun getDefaultLayout(): Int = R.layout.view_movie_info_bar
 
     @EpoxyAttribute
     lateinit var accountStates: AccountState
