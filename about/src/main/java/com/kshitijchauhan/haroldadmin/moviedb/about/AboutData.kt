@@ -1,18 +1,17 @@
 package com.kshitijchauhan.haroldadmin.moviedb.about
 
-import com.kshitijchauhan.haroldadmin.moviedb.about.BuildConfig
-
 private const val githubProfile = "https://www.github.com/haroldadmin"
 private const val authName = "Kshitij Chauhan"
 private const val repoUrl = "https://www.github.com/haroldadmin/moviedb"
 private const val appUrl = "https://play.google.com/store/apps/details?id=com.kshitijchauhan.haroldadmin.moviedb"
 private const val tmdb = "http://themoviedb.org"
 
-data class AboutState(
-    val version: String = "0.8 TODO",// TODO get from BuildConfig.VERSION_NAME
-    val applicationUrl: String = appUrl,
-    val authorName: String = authName,
-    val authorUrl: String = githubProfile,
-    val repositoryUrl: String = repoUrl,
-    val tmdbUrl: String = tmdb
-)
+internal object AboutData {
+
+    const val VERSION: String = "0.8 TODO" // TODO get from BuildConfig.VERSION_NAME
+    const val APPLICATION_URL: String = appUrl
+    const val AUTHOR_NAME: String = authName
+    const val AUTHOR_URL: String = githubProfile
+    const val REPOSITORY_URL: String = repoUrl
+    const val TMDB_URL: String = tmdb
+}

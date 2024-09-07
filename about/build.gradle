@@ -3,10 +3,6 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'com.jakewharton.butterknife'
 
-kapt {
-    correctErrorTypes = true
-}
-
 android {
     compileSdkVersion BuildConfig.compileSdk
 
@@ -59,10 +55,6 @@ dependencies {
     implementation Libraries.constraintLayout
 
     implementation Libraries.koinAndroid
-
-    implementation Libraries.epoxy
-    implementation Libraries.epoxyDatabinding
-    kapt Libraries.epoxyProcessor
 }
 
 repositories {
