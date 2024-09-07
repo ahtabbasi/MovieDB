@@ -6,7 +6,7 @@ Remove firebase (should we?)
 
 Replace databinding with viewBinding
 Migrate UI to compose
-Migrate DI to Dagger
+Migrate DI to latest Koin then to Dagger
 Migrate LiveData to Flow
 Write Unit tests
 Write unit UI tests
