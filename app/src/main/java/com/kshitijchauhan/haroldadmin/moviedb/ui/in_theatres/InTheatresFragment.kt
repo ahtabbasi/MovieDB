@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.RequestManager
 import com.google.android.material.snackbar.Snackbar
 import com.kshitijchauhan.haroldadmin.moviedb.R
-import com.kshitijchauhan.haroldadmin.moviedb.about.R2.attr.layoutManager
+import com.kshitijchauhan.haroldadmin.moviedb.about.R.attr.layoutManager
 import com.kshitijchauhan.haroldadmin.moviedb.core.Resource
 import com.kshitijchauhan.haroldadmin.moviedb.core.extensions.getNumberOfColumns
 import com.kshitijchauhan.haroldadmin.moviedb.databinding.FragmentInTheatresBinding

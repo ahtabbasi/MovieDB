@@ -5,7 +5,9 @@ Upgrade targetSDK, minSDK and compileSDK
 Remove firebase (should we?)
 Update the package name
 
-Update the navigation library code to follow the latest best practices
+Update the navigation library code to follow the latest best practices (updated from 2.3.5)
+Use the latest gradle features since Gradle 5
+
 Replace databinding with viewBinding
 Migrate UI to compose
 Migrate DI to latest Koin then to Dagger
