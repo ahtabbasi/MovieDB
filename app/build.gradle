@@ -10,6 +10,8 @@ kapt {
 }
 
 android {
+    namespace 'com.kshitijchauhan.haroldadmin.moviedb'
+
     compileSdkVersion BuildConfig.compileSdk
     defaultConfig {
         applicationId BuildConfig.applicationId
@@ -117,10 +119,3 @@ dependencies {
 }
 
 apply plugin: 'com.google.gms.google-services'
-
-
-configurations.configureEach {
-    resolutionStrategy {
-        force 'androidx.fragment:fragment:1.2.0'
-    }
-}

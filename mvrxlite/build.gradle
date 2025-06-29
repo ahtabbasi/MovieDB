@@ -2,12 +2,12 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
+    namespace 'com.kshitijchauhan.haroldadmin.mvrxlite'
+
     compileSdkVersion BuildConfig.compileSdk
     defaultConfig {
         minSdkVersion BuildConfig.minSdk
         targetSdkVersion BuildConfig.targetSdk
-        versionCode BuildConfig.versionCode
-        versionName BuildConfig.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

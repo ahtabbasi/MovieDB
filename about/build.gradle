@@ -4,13 +4,12 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'com.jakewharton.butterknife'
 
 android {
+    namespace 'com.kshitijchauhan.haroldadmin.moviedb.about'
     compileSdkVersion BuildConfig.compileSdk
 
     defaultConfig {
         minSdkVersion BuildConfig.minSdk
         targetSdkVersion BuildConfig.targetSdk
-        versionCode BuildConfig.versionCode
-        versionName BuildConfig.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
