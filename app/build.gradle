@@ -22,6 +22,11 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
+
+    buildFeatures {
+        buildConfig true
+    }
+
     buildTypes {
         debug {
             minifyEnabled false

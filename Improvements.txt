@@ -7,6 +7,7 @@ Update the package name
 
 Update the navigation library code to follow the latest best practices (updated from 2.3.5)
 Use the latest gradle features since Gradle 5.0
+Remove buildConfig = true from the modules where we shouldn't have build configs
 
 Replace databinding with viewBinding
 Migrate UI to compose
